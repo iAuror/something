@@ -20,5 +20,6 @@ from manager.views import Shop
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Shop.as_view(), name='main-page')
+    path('', Shop.as_view(),name='index-page'),
+    path('buy/',include('manager.urls'))
 ]
