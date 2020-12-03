@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -7,6 +8,7 @@ class Books(models.Model):
     published = models.DateTimeField(auto_now_add=True, verbose_name='Время публикации')
     shop = models.ForeignKey('Pub_office', on_delete=models.CASCADE)
     genre = models.ForeignKey('Genre', on_delete=models.CASCADE, null=True)
+    buyers=models.ManyToManyField(User)
 
     class Meta:
         verbose_name = 'Книга'
@@ -36,3 +38,9 @@ class Genre(models.Model):
     class Meta:
         verbose_name = 'Жанр '
         verbose_name_plural = 'Жанры'
+
+class Comment (models.Model):
+    book=models.ForeignKey ('Books',on_delete=models.CASCADE,related_name='comment')
+    text=models.TextField(verbose_name='Комментарий')
+    comment_date=models.DateTimeField(auto_now_add=True)
+    author=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
