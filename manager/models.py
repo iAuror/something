@@ -7,7 +7,7 @@ class Books(models.Model):
     text = models.TextField(verbose_name='Текст книги')
     published = models.DateTimeField(auto_now_add=True, verbose_name='Время публикации')
     shop = models.ForeignKey('Pub_office', on_delete=models.CASCADE)
-    genre = models.ForeignKey('Genre', on_delete=models.CASCADE, null=True)
+    genre = models.ForeignKey('Genre', on_delete=models.CASCADE, null=True,verbose_name='Жанр')
     buyers=models.ManyToManyField(User)
 
     class Meta:
