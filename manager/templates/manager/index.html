@@ -11,6 +11,7 @@
     <title>{{ title}}</title>
   </head>
   <body>
+  {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/">Book Corp. </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +34,8 @@
       </li>
         <ul>
 </nav>
-
+  {% endblock %}
+  {% block content %}
 {% for i in books %}
     <div class="card container ml-3">
   <div class="card-header">
@@ -43,16 +45,17 @@
     <h5 class="card-title">{{ i.title }}</h5>
     <p class="card-text">{{ i.text }}</p>
     <p class="card-text">{{ i.shop }}</p>
-    <a href="/" class="btn btn-primary">Читать</a>
+    <a href="{% url 'open-book' genre=i.genre id=i.id %}" class="btn btn-primary">Читать</a>
   </div>
   <div class="card-footer text-muted">
-      <button type="button" class="btn btn-success">Количество комментариев к книге: {{ i.comment.count }}</button>
+      <button type="button" class="btn btn-success">Количество комментариев к книге: {{ i.com }}</button>
+      <button type="button" class="btn btn-danger"><a href="{% url 'add-like' id=i.id %}">Лайки: {{ i.count }}</a></button>
     {{ i.published|date:'d-m-Y H:i' }}
 
   </div>
 </div>
 {% endfor %}
-
+ {% endblock %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 

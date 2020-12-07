@@ -9,6 +9,8 @@ class Books(models.Model):
     shop = models.ForeignKey('Pub_office', on_delete=models.CASCADE)
     genre = models.ForeignKey('Genre', on_delete=models.CASCADE, null=True,verbose_name='Жанр')
     buyers=models.ManyToManyField(User)
+   # like=models.PositiveIntegerField(default=0)
+    likes=models.ManyToManyField(User,related_name='liked_books')
 
     class Meta:
         verbose_name = 'Книга'
@@ -44,3 +46,7 @@ class Comment (models.Model):
     text=models.TextField(verbose_name='Комментарий')
     comment_date=models.DateTimeField(auto_now_add=True)
     author=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
