@@ -1,27 +1,40 @@
 {% extends 'manager/index.html' %}
-{% block content %}
-    {% for i in books %}
-    <div class="card">
-  <div class="card-header">
-   <h2> {{ i.title }}</h2>
-  </div>
-  <div class="card-body">
-    <blockquote class="blockquote mb-0">
-      <p>{{ i.text }}</p>
-      <footer class="blockquote-footer">Комментариев-{{ i.com }} <cite title="Source Title">{{ i.published }}</cite></footer>
-  {% endfor %}
-        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-      {% for q in comment %}
-    <h5 class="card-title">{{ q.author }}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{ q.text }}</h6>
-    <p class="card-text">{{ q.comment_date|date:'d-m-Y H:i:s' }}</p>
 
-  </div>
-</div>
+{% block content %}
+
+
+    {% for i in books %}
+        <div class="container mt-2">
+            <div class="card ">
+                <div class="card-header">
+                    {{ i.genre }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.title }}</h5>
+                    <p class="card-text">{{ i.text }}</p>
+
+                </div>
+                <div class="card-footer text-muted">
+                    {% for q in range %}
+
+                         {% if i.rate < q %}
+                        <a href="{% url 'add-rating-location' id=i.id rating=q location=1 %}"><span class="fa fa-star"></span></a>
+                            {% else %}
+                        <a href="{% url 'add-rating-location' id=i.id rating=q location=1 %}"><span class="fa fa-star checked"></span></a>
+                        {% endif %}
+                        {% endfor %}
+
+
+
+                    <div class="btn btn-success btn-sm">Рейтинг {{ i.rate }}</div>
+
+                    <a href="{% url 'open-comment' title=i.title id=i.pk %}" class="btn btn-success btn-sm">Комментарии {{ i.comment.count }}</a>
+
+
+                    <p class="text-center fst-italic">{{ i.published|date:'d-m-Y H:i:s' }}- Издатель {{ i.shop }}</p>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-    </blockquote>
-  </div>
-</div>
 
 {% endblock %}
