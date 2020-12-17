@@ -83,7 +83,8 @@ class Comment(models.Model):
     text = models.TextField(verbose_name='Комментарий')
     comment_date = models.DateTimeField(auto_now_add=True)
     author_comment = models.ManyToManyField(User, related_name='comment_likers', through='CommentLikes')
-    name = models.ManyToManyField(User)
+    likes_count=models.IntegerField(default=0)
+
 
     class Meta:
         verbose_name = 'Комментарий'
@@ -100,9 +101,17 @@ class CommentLikes(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_like')
 
+
     def save(self, **kwargs):
         try:
             super().save(**kwargs)
         except:
-            CommentLikes.objects.get(user=self.user, comment=self.comment, ).delete()
-        self.save()
+            CommentLikes.objects.get(user=self.user, comment=self.comment).delete()
+            self.comment.likes_count-=1
+        else:
+            self.comment.likes_count+=1
+        self.comment.save()
+
+
+
+

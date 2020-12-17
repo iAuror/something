@@ -28,7 +28,7 @@
 
                     <div class="btn btn-success btn-sm">Рейтинг {{ i.rate }}</div>
 
-                    <a href="{% url 'open-comment' title=i.title id=i.pk %}" class="btn btn-success btn-sm">Комментарии {{ i.comment.count }}</a>
+                    <a href="{% url 'open-comment' slug=i.slug  %}" class="btn btn-success btn-sm">Комментарии {{ i.comment.count }}</a>
 
 
                     <p class="text-center fst-italic">{{ i.published|date:'d-m-Y H:i:s' }}- Издатель {{ i.shop }}</p>
