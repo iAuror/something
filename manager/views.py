@@ -82,7 +82,7 @@ class AddComment(View):
             comment.save()
             # com.save_m2m ()
             comment.author_comment.add(request.user)
-
+            CommentLikes.objects.get(user=request.user, comment_id=comment.id).delete()
             comment.save()
 
             return redirect('open-comment', slug=slug)
