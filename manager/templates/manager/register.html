@@ -1,0 +1,14 @@
+{% extends 'manager/index.html' %}
+{% block content %}
+
+  <div class="container">
+  {% for i in messages %}
+        <p class="{{ i.tag }}">{{ i }}</p>
+    {% endfor %}
+        <form action="{% url 'register'  %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" class="btn btn-success" value="Зарегистрироваться ">
+        </form>
+    </div>
+{% endblock %}

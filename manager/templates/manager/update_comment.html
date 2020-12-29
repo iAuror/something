@@ -1,0 +1,15 @@
+{% extends 'manager/index.html' %}
+
+<h1>test</h1>
+{% block update_book %}
+    <div class="container">
+        <form action="{% url 'update-comment' slug=books.slug id=comment.id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" class="btn btn-success" value="Обновить">
+        </form>
+    </div>
+{% endblock %}
+{% block content %}
+
+{% endblock %}

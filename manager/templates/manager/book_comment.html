@@ -8,7 +8,7 @@
                 {% for i in books %}
                     <p class="fw-bold fs-3">{{ i.title }}</p>
                     {% if user.is_authenticated %}
-                        <form action="{% url 'add-comment' slug=i.slug book_id=i.id %}" method="post">
+                        <form action="{% url 'add-comment' slug=i.slug  %}" method="post">
                         {% csrf_token %}
                         {{ form }}<br>
                         <input type="submit" value="Добавить комментарий" class="btn btn-info ">
@@ -27,6 +27,9 @@
                         <p class="card-text">{{ q.text }}
                             <a href="{% url 'add-comment-like' id=q.id slug=i.slug %}"> <span
                                     class="badge bg-info text-dark">Likes: {{ q.likes_count }} </span> </a>
+                        {% if q.is_owner%}
+                            <a href="{% url 'update-comment'  slug=i.slug id=q.id %}" class="btn btn-danger">Обновить </a>
+                        {% endif %}
                         </p>
                     {% endfor %}
                 </div>

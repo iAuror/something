@@ -55,6 +55,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}"> Logout</a>
                     </li>
+                 <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}"> Регистрация</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add-book' %}"> Добавить книгу</a>
+                    </li>
                 </ul>
 
             </div>
@@ -63,6 +69,8 @@
 {% endblock %}
 <!-- Верхний навбар заканчивается тут -->
 {% block login %}
+{% endblock %}
+{% block update_book %}
 {% endblock %}
 {% block content %}
 
@@ -81,9 +89,9 @@
                     {% for q in range %}
 
                         {% if i.rate < q %}
-                            <a href="{% url 'add-rating' id=i.id rating=q %}"><span class="fa fa-star"></span></a>
+                            <a href="{% url 'add-rating' slug=i.slug rating=q %}"><span class="fa fa-star"></span></a>
                         {% else %}
-                            <a href="{% url 'add-rating' id=i.id rating=q %}"><span
+                            <a href="{% url 'add-rating' slug=i.slug rating=q %}"><span
                                     class="fa fa-star checked"></span></a>
                         {% endif %}
                     {% endfor %}
@@ -94,10 +102,18 @@
 
                     <a href="{% url 'open-comment' slug=i.slug %}"
                        class="btn btn-success btn-sm">Комментарии {{ i.count }}</a>
-
+                    {% if i.is_owner %}
+                    <a href="{% url 'delete-book' slug=i.slug %}"
+                       class="btn btn-danger btn-sm">Удалить книгу</a>
+                    <a href="{% url 'update-book' slug=i.slug %}"
+                       class="btn btn-info btn-sm">Обновить книгу</a>
+                {% endif %}
 
                     <p class="text-center fst-italic">{{ i.published|date:'d-m-Y H:i:s' }}- Издатель {{ i.shop }} Автор
-                        - {{ i.author }}</p>
+                        - {%  for author in i.author.all %}
+                            {{ author }}
+                            {% endfor %}
+                            </p>
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@
 {% block content %}
 
 
-    {% for i in books %}
+    {% for i in book %}
         <div class="container mt-2">
             <div class="card ">
                 <div class="card-header">
@@ -18,9 +18,9 @@
                     {% for q in range %}
 
                          {% if i.rate < q %}
-                        <a href="{% url 'add-rating-location' id=i.id rating=q location=1 %}"><span class="fa fa-star"></span></a>
+                        <a href="{% url 'add-rating-location' slug=i.slug rating=q location=1 %}"><span class="fa fa-star"></span></a>
                             {% else %}
-                        <a href="{% url 'add-rating-location' id=i.id rating=q location=1 %}"><span class="fa fa-star checked"></span></a>
+                        <a href="{% url 'add-rating-location' slug=i.slug rating=q location=1 %}"><span class="fa fa-star checked"></span></a>
                         {% endif %}
                         {% endfor %}
 

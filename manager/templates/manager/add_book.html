@@ -1,0 +1,9 @@
+{% extends 'manager/index.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+                        <form action="{% url 'add-book'  %}" method="post">
+                        {% csrf_token %}
+                        {{ form }}<br>
+                        <input type="submit" value="Добавить книгу" class="btn btn-info ">
+                    {% endif %}
+{% endblock %}

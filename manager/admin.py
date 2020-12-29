@@ -10,7 +10,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class BooksAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'published', 'shop', 'genre',)
+    list_display = ( 'title', 'published', 'shop', 'genre',)
     list_display_links = ('title',)
     readonly_fields = ['rate',]
     exclude = ['rate_all_stars','count_rate_users']
