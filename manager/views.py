@@ -7,7 +7,8 @@ from django.views import View
 from manager.forms import CommentForm, BooksForm, CustomUserCreationForm, CustomAuthenticationForm
 from manager.models import Books, Comment, BookRating, CommentLikes, Genre
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.views.decorators.cache import cache_page
+from django.core.paginator import Paginator
 
 class Shop(View):
     def get(self, request):
@@ -19,9 +20,9 @@ class Shop(View):
         if request.user.is_authenticated:
             is_owner = Exists(User.objects.filter(books=OuterRef('pk'), id=request.user.id))
             books = books.annotate(is_owner=is_owner)
-
+        paginator=Paginator (books , 4)
         context = {'title': 'Shop Book',
-                   'books': books,
+                   'books': paginator.get_page(request.GET.get('page',1)),
                    'comments': comments,
                    'range': range(1, 6),
                    'genre': genre,

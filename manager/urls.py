@@ -1,11 +1,11 @@
 from django.urls import path, include
-
+from django.views.decorators.cache import cache_page
 from manager.views import Shop, OpenBook, OpenComment, AddCommentLike, AddBookRating, \
     AddComment, Login, Logout, AddBook, delete_book, UpdateBook, UpdateComment, CreateUser
 
 urlpatterns = [
-    path('', Shop.as_view(), name='index-page'),
-
+    #path('', Shop.as_view(), name='index-page'),
+    path('', cache_page(5)(Shop.as_view()), name='index-page'),
     path('book/<str:slug>/', OpenBook.as_view(), name='open-book'),
     path('commentary/<str:slug>/<int:id>/', AddCommentLike.as_view(), name='add-comment-like'),
     path('commentary/<str:slug>/', OpenComment.as_view(), name='open-comment'),
